@@ -1,0 +1,171 @@
+/***************************************************************
+Base CSS =======================================================
+***************************************************************/
+:root {
+  /* [Var] Color Palette (Black-Gray-Black) */
+  --background-0: hsl(214, 14%, 10%);
+  --background-1: hsl(214, 8%, 12%);
+  --background-2: hsl(214, 8%, 18%);
+  --base-color-1: hsl(214, 10%, 70%);
+  --base-color-2: hsl(214, 10%, 85%);
+  --accent-color: hsl(230, 60%, 65%);
+  /* [Var] Text (Minor Third 1.2 Scale Rounded Ratio) */
+  --text-size-sm: 0.8rem;
+  --text-size-md: 1rem;
+  --text-size-lg: 1.2rem;
+  --text-size-title: 2rem;
+  /* [Fixed] Font (Inter Best Font) */
+  font-family: "Inter", sans-serif;
+  font-feature-settings: "calt", "ss03", "cv02", "cv05", "cv11";
+  /* fix for Chrome */
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: "InterVariable", sans-serif;
+  }
+}
+
+::selection {
+  background: #223d5b;
+  color: #fff;
+}
+
+::-moz-selection {
+  background: #213e5e;
+  color: #fff;
+}
+
+/* Html Body and Base Background */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--base-color-1) var(--background-2);
+  scroll-behavior: smooth;
+  background-color: var(--background-0);
+  color: var(--base-color-2);
+  font-size: var(--text-size-md);
+  line-height: 1.5;
+  min-width: 320px;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body{
+  background-color: var(--background-1);
+  margin: 0;
+  padding: 0;
+}
+
+#error {
+  background-color: #ffcccc;
+  color: #d8000c;
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: none;
+}
+
+#messages {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 1.5rem 0rem;
+  background-color: var(--background-1);
+  min-height: calc(100vh - 10rem);
+}
+
+#messages .msg {
+  transform: translateZ(0);
+  padding: 0.5rem 0;
+}
+
+.form-wrapper {
+  background-color: var(--background-0);
+  width: calc(100% - 3rem);
+  position: fixed;
+  bottom: 0;
+  padding: 0.2rem 1.5rem 1rem 1.5rem;
+}
+
+#message-form {
+  display: flex;
+}
+.block {
+  min-height: 7rem;
+  min-width: 100vw;
+  overflow: hidden;
+  background-color: var(--background-1);
+}
+
+#message-form .input-wrapper {
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+  margin: 0 0.5rem 0 0;
+  font-size: 1rem;
+  height: 3.5rem;
+  background-color: var(--background-2);
+  color: var(--base-color-2);
+  border-radius: 2.25rem;
+  border: 0.1rem solid var(--background-0);
+}
+
+#message-form textarea {
+  height: 100%;
+  min-width: 320px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) var(--background-1);
+  background-color: transparent;
+  color: var(--base-color-2);
+  border: none;
+  resize: none;
+  outline: none;
+}
+
+#message-form button {
+  min-width: 4.5rem;
+  min-height: 4.5rem;
+  padding: 0.5rem;
+  border-radius: 2.25rem;
+  color: var(--base-color-2);
+  background-color: var(--accent-color);
+  border: 0.1rem solid var(--background-1);
+}
+
+#message-form button:hover {
+  background-color: var(--background-2);
+}
+
+#message-form button svg {
+  width: 2.7rem;
+  height: 2.7rem;
+  margin: 0;
+  padding: 0;
+}
+
+#users {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--background-0);
+  z-index: 4;
+  padding: 1rem 1.5rem;
+}
+
+#typing {
+  display: block;
+  font-style: italic;
+  color: var(--base-color-1);
+  font-size: var(--text-size-sm);
+  height: var(--text-size-sm);
+  padding-top: 0;
+  padding-bottom: 0.2rem;
+  margin: 0;
+}
