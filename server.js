@@ -43,9 +43,11 @@ io.on('connection', (socket) => {
         socket.emit('redirect', { url: "/chat.html?room=" + room + "&username=" + user });
         username = user;
         currentRoom = room;
+        
+        console.log("[" + currentRoom + "] <" + username + " connected>");
         rooms[room].users.push(user);
         socket.join(room);
-        
+
         // Send back the message history
         socket.emit('loadMessages', rooms[room].messages);
 
@@ -62,6 +64,7 @@ io.on('connection', (socket) => {
         // Save message in room
         rooms[currentRoom].messages.push(messageData);
         io.to(currentRoom).emit('message', messageData);
+        console.log("[" + currentRoom + "] " + messageData.username + ": " + messageData.message);
     });
 
     // Handle typing indicator
@@ -75,6 +78,7 @@ io.on('connection', (socket) => {
             rooms[currentRoom].users = rooms[currentRoom].users.filter(user => user !== username);
             socket.broadcast.to(currentRoom).emit('userLeft', username);
             io.to(currentRoom).emit('updateUsers', rooms[currentRoom].users);
+            console.log("[" + currentRoom + "] <" + username + " disconnected>");
         }
     });
 });

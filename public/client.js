@@ -11,10 +11,10 @@ const room = params.get('room');
 const username = params.get('username');
 
 document.title = `Chat Room: ${room}`;
-console.log("[" + room + "] " + username + "joined");
+
 // Check if parameters are present
 socket.emit('joinRoom', { user: username, room });
-
+console.log("<"+username +"> (self) successfully joined "+room);
 function validateInputs(username, room) {
     return username.trim() !== '' && room.trim() !== ''; // Check for non-empty values
 }
@@ -34,9 +34,11 @@ socket.on('loadMessages', (messages) => {
     messages.forEach(msg => {
         addMessage(msg);
     });
+    console.log("Loaded all messages for "+room);
 });
 
 socket.on('message', (data) => {
+    console.log("New Message from <"+data.username+">");
     addMessage(data);
 });
 
@@ -53,10 +55,12 @@ socket.on('typing', (user) => {
 
 socket.on('userJoined', (user) => {
     addMessage({ timestamp: new Date().toLocaleString(), username: 'System', message: `${user} has joined the chat.` });
+    console.log("<"+username+"> joined...");
 });
 
 socket.on('userLeft', (user) => {
     addMessage({ timestamp: new Date().toLocaleString(), username: 'System', message: `${user} has left the chat.` });
+    console.log("<"+username+"> left...");
 });
 
 // Handle key presses in the message input
@@ -74,6 +78,7 @@ function sendMessage() {
 
     if (message) {
         socket.emit('newMessage', message);
+        console.log("<"+username+"> sent a message out");
         messageInput.value = ''; // Clear input after sending
     }
 }
