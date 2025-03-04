@@ -24,7 +24,7 @@ wss.on("connection", function connection(ws) {
                 handle_message(username, room, data);
                 break;
             case "CheckValid":
-                // Sends "True" or "False"+error_msg
+                // Sends "True" or "False"+error_msgno
                 break;
             case "join":
                 username = msg["username"];

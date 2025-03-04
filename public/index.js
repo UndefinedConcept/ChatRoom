@@ -21,6 +21,6 @@ function submit_login() {
     if (username != "" && chatroom != "") {
         localStorage.setItem("username", username);
         localStorage.setItem("chatroom", chatroom);
-        window.location.href = "/chat.html";
+        window.location.href = "chat.html";
     }
 }

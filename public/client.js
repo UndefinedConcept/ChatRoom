@@ -4,7 +4,7 @@ const username = localStorage.getItem("username");
 const chatroom = localStorage.getItem("chatroom");
 
 if (username == null || chatroom == null) {
-        window.location.href = "/index.html";
+        window.location.href = "index.html";
 }
 
 //err erError message console.log("hi");
