@@ -6,51 +6,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chatroom - Enter Room</title>
-  <link rel="expect" href="fonts/InterVariable.woff2" as="font" crossorigin="" type="font/woff2">
-  <link rel="stylesheet" href="fonts/inter.css" />
-  <!-- Main CSS Styles -->
-  <link rel="preload" href="styles.css" as="style">
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* Basic styling */
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    input {
-      margin: 5px;
-    }
-
-    /* Error banner styling */
-    #error-banner {
-      display: none;
-      /* Initially hidden */
-      background-color: #ffcccc;
-      color: #d8000c;
-      padding: 10px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      text-align: center;
-    }
-
-    .close-btn {
-      background: none;
-      border: none;
-      color: #d8000c;
-      font-weight: bold;
-      cursor: pointer;
-      position: absolute;
-      right: 10px;
-      top: 5px;
-    }
-  </style>
 </head>
 
 <body>
@@ -59,68 +14,12 @@
     <button class="close-btn" onclick="closeBanner()">X</button>
   </div>
 
-  <h1>Join a Chat Room</h1>
-  <input id="username" type="text" placeholder="Enter username" required>
-  <input id="room" type="text" placeholder="Enter room (room1 or room2)" required>
-  <button id="join">Join</button>
-
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-
-    // Function to validate input fields
-    function validateInputs(username, room) {
-      return username.trim() !== '' && room.trim() !== ''; // Check for non-empty values
-    }
-
-    // Function to sanitize input
-    function sanitizeInput(input) {
-      return input.replaceAll("[-.\\+*?\\[^\\]$(){}=!<>|:\\\\]", "\\\\$0") // Sanitized; // Return the sanitized input
-    }
-
-    document.getElementById('join').onclick = function () {
-      const username = sanitizeInput(document.getElementById('username').value);
-      const room = sanitizeInput(document.getElementById('room').value);
-
-      if (!validateInputs(username, room)) {
-        showError("Please fill in both fields.");
-        return; // Prevent proceeding if inputs are invalid
-      }
-
-      window.location.href = "/chat.html?room=" + room + "&username=" + username;
-    };
-
-    socket.on('error', ({ url, error }) => {
-      // Append error message to the URL as a parameter
-      const errorUrl = new URL(url, window.location.origin);
-      errorUrl.searchParams.append('error', encodeURIComponent(error));
-      window.location.href = errorUrl; // Redirect to the homepage with error message
-    });
-
-    socket.on('redirect', ({ url }) => {
-      window.location.href = url;
-    });
-
-    // Function to show error banner
-    function showError(message) {
-      document.getElementById('error-message').innerText = message;
-      document.getElementById('error-banner').style.display = 'block';
-    }
-
-    // Close the error banner
-    function closeBanner() {
-      document.getElementById('error-banner').style.display = 'none';
-    }
-
-    // Check if there's an error in the URL parameters
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('error')) {
-      showError(decodeURIComponent(params.get('error'))); // Display the error message
-      // Optionally, you can clear the error from the URL after displaying
-      params.delete('error');
-      window.history.replaceState({}, document.title, window.location.pathname); // Remove the error parameter from the URL
-    }
-  </script>
+  <div id="login">
+    <input id="username" type="text"></input>
+    <input id="username" type="text"></input>inp
+  </div>
+  </div>
+  
 </body>
 
 </html>

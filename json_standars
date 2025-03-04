@@ -1,0 +1,6 @@
+username: username
+header: message type ["check", "message"]
+data: message data (can be another json)
+
+userdata 
+room: room name
