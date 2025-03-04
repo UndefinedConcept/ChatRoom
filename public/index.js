@@ -1,11 +1,11 @@
 const saved_username = localStorage.getItem("username");
 const saved_chatroom = localStorage.getItem("chatroom");
 
-if (username != undefined){
+if (saved_username != undefined){
     document.getElementById("user_name").value = username;
 }
 
-if (chatroom != undefined) {
+if (saved_chatroom != undefined) {
     document.getElementById("room_name").value = chatroom;
 }
 
