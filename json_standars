@@ -1,5 +1,5 @@
 username: username
-header: message type ["check", "message"]
+type: message type ["check", "message"]
 data: message data (can be another json)
 
 userdata 

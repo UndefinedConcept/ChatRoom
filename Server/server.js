@@ -11,20 +11,25 @@ const rooms = new Map([]);
 
 // Server Stuff
 wss.on("connection", function connection(ws) {
-    // Code for Inital Connectio
-
+    // START of INITAL CONNECTION
     let username = '';
-    let roomname = '';
+    let room = '';
 
-    ws.on('check', () => {
-        
-    });
+    // END of INITAL CONNECTION
     ws.on("error", console.error);
     ws.on("message", function message(data) {
         const msg = JSON.parse(data);
         switch (msg["type"]) {
             case "msg":
-                handle_message(username, room, JSON.parse(msg["data"]));
+                handle_message(username, room, data);
+                break;
+            case "CheckValid":
+                // Sends "True" or "False"+error_msg
+                break;
+            case "join":
+                username = msg["username"];
+                room = msg["data"];
+                room_join_and_creation(username, ws, room);
                 break;
         }
     });
@@ -33,49 +38,28 @@ wss.on("connection", function connection(ws) {
         if (username != '' && roomname != '') {
             rooms.get(roomname).get("users").delete(username);
         }
+        ws.close();
         console.log(username +  " disconnected");
     });
         
 });
 
+function room_join_and_creation(username, ws, room_name){
+    const room = rooms.get(room_name);
+    if (room != undefined) {
+        room.get("users").push(new Map([username,ws]));
+    } else {
+        rooms.set(room_name, new Map(["users", new Map()],["msg",[]]));
+    }
+}
+
 function handle_message(username, room, msg_data) {
     let chat_room = rooms.get(room);
     if (chat_room != undefined) {
         let users = room.get("users");
-        for (user in users) {
-            
+        for (const [key, value] of users){
+            value.send(JSON.stringify(new Map[["username",username], ["type","msg"], ["data",msg_data]]));
         }
     }
 }
 
-function create_room(room_name) {
-    // 
-    // RETURNS: void
-    rooms.set(room_name, [], []);
-}
-
-function is_unique_username(username, room) {
-    // 
-    // RETURNS: 
-    return !(user in rooms.get(room).get("users"));
-}
-
-function add_user(username, ws, room) {
-    // 
-    // RETURNS: 
-    rooms.get(room).get(users).push(Map([[username,ws]]));
-}
-
-function remove_user(username) {
-    // 
-    // RETURNS: 
-    users.delete(username);
-}
-
-
-
-
-
-
-
-console.log("on");
