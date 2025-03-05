@@ -6,7 +6,7 @@ const wss = new WebSocket.Server({
 });
 
 // Constants
-const rooms = new Map([]);
+const rooms = new Map();
 // { 'room1' (ROOM_NAME): {'users': [ <String>user: ws ], 'msg': []} }
 
 // Server Stuff
@@ -19,6 +19,7 @@ wss.on("connection", function connection(ws) {
     ws.on("error", console.error);
     ws.on("message", function message(data) {
         const msg = JSON.parse(data);
+        console.log(msg);
         switch (msg["type"]) {
             case "msg":
                 handle_message(username, room, data);
@@ -35,8 +36,8 @@ wss.on("connection", function connection(ws) {
     });
 
     ws.on('close', () => {
-        if (username != '' && roomname != '') {
-            rooms.get(roomname).get("users").delete(username);
+        if (username != '' && room != '') {
+            rooms.get(room).get("users").delete(username);
         }
         ws.close();
         console.log(username +  " disconnected");
@@ -45,20 +46,22 @@ wss.on("connection", function connection(ws) {
 });
 
 function room_join_and_creation(username, ws, room_name){
-    const room = rooms.get(room_name);
-    if (room != undefined) {
-        room.get("users").push(new Map([username,ws]));
-    } else {
-        rooms.set(room_name, new Map(["users", new Map()],["msg",[]]));
+    let room = rooms.get(room_name);
+    if (room == undefined) {
+        rooms.set(room_name, new Map([["users", new Map()],["msg",[]]]));
+        room = rooms.get(room_name);
     }
+    let users = room.get("users");
+    users.set(username, ws);
 }
 
 function handle_message(username, room, msg_data) {
     let chat_room = rooms.get(room);
+    const msg = JSON.parse(msg_data).data;
     if (chat_room != undefined) {
-        let users = room.get("users");
+        let users = chat_room.get("users");
         for (const [key, value] of users){
-            value.send(JSON.stringify(new Map[["username",username], ["type","msg"], ["data",msg_data]]));
+            value.send(JSON.stringify({username:username, type:"msg", data:msg, timestamp: new Date().toLocaleString()}));
         }
     }
 }
