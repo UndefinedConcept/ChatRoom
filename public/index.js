@@ -2,11 +2,11 @@ const saved_username = localStorage.getItem("username");
 const saved_chatroom = localStorage.getItem("chatroom");
 
 if (saved_username != undefined){
-    document.getElementById("user_name").value = username;
+    document.getElementById("user_name").value = saved_username;
 }
 
 if (saved_chatroom != undefined) {
-    document.getElementById("room_name").value = chatroom;
+    document.getElementById("room_name").value = saved_chatroom;
 }
 
 document.addEventListener("keypress", function(event) {
