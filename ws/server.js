@@ -28,8 +28,9 @@ wss.on("connection", function connection(ws) {
                 allowed_user = true;
                 username = msg["username"];
                 room = msg["data"];
-                if (room != undefined) {
-                    users = rooms.get(room).get("users");
+                room_map = rooms.get(room);
+                if (room_map != undefined) {
+                    users = room_map.get("users");
                     if (users.get(username) != undefined) {
                         ws.send(JSON.stringify({type: "error", data: "not unique user"}));
                         ws.close();
@@ -72,6 +73,5 @@ function handle_message(username, room, msg_data) {
             value.send(JSON.stringify({username: username, type: "msg", data: msg, timestamp: new Date().toLocaleString()}));
         }
     }
-    chat_room.style.height = "16px";
 }
 

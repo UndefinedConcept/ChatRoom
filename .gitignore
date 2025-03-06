@@ -129,5 +129,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+.vscode
+.vscode\launch.json
+
 # testing folder
 test/
