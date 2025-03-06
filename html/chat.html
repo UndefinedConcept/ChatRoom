@@ -41,23 +41,6 @@
   </section>
 
   <script src="client.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const textarea = document.getElementById("input_box");
-        textarea.addEventListener("input", function () {
-          // Reset the height to allow for recalculating
-          this.style.height = 'auto';
-          // Set the height to match the scrollHeight (content height)
-          this.style.height = this.scrollHeight + 'px';
-
-          // Check if the height exceeds max-height
-          const maxHeight = window.getComputedStyle(this).maxHeight;
-          if (parseInt(this.style.height) > parseInt(maxHeight)) {
-            this.style.height = maxHeight; // Set to max-height if exceeded
-          }
-        });
-      });
-  </script>
 </body>
 
 </html>

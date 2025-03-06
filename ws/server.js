@@ -64,5 +64,6 @@ function handle_message(username, room, msg_data) {
             value.send(JSON.stringify({username:username, type:"msg", data:msg, timestamp: new Date().toLocaleString()}));
         }
     }
+    chat_room.style.height = "16px";
 }
 

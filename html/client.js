@@ -16,6 +16,29 @@ const messagesDiv = document.getElementById('message_box');
 const usersDiv = document.getElementById('users_box');
 const user_input = document.getElementById("input_box");
 
+document.addEventListener("DOMContentLoaded", function(event){
+        document.getElementById("room_name").innerHTML = chatroom;
+        user_input.addEventListener("input", function () {
+          // Reset the height to allow for recalculating
+          this.style.height = 'auto';
+          // Set the height to match the scrollHeight (content height)
+          this.style.height = this.scrollHeight + 'px';
+
+          // Check if the height exceeds max-height
+          const maxHeight = window.getComputedStyle(this).maxHeight;
+          if (parseInt(this.style.height) > parseInt(maxHeight)) {
+            this.style.height = maxHeight; // Set to max-height if exceeded
+          }
+        });
+});
+
+document.addEventListener("keypress", function(event){
+        if (event.key == "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                submit_message();
+        }
+})
+
 webSocket.onopen = (event) => {
         let msg = {username:username, type:"join", data:chatroom};
         webSocket.send(JSON.stringify(msg));
@@ -56,7 +79,13 @@ function addMessage(data) {
 }
 
 document.getElementById("submit").addEventListener("click", function(event){
+        submit_message();
+});
+
+function submit_message() {
         if (user_input.value != "" && user_input.value.trim()!=""){
                 webSocket.send(JSON.stringify({username:username, type:"msg", data:user_input.value.trim()}));
         }
-});
+        user_input.value = "";
+        user_input.style.height = 'auto';
+}
