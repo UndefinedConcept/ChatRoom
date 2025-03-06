@@ -2,7 +2,7 @@ const WebSocket = require("ws");
 
 // Server connection to 8080
 const wss = new WebSocket.Server({
-        port: 8080
+    port: 8080
 });
 
 // Constants
@@ -24,13 +24,21 @@ wss.on("connection", function connection(ws) {
             case "msg":
                 handle_message(username, room, data);
                 break;
-            case "CheckValid":
-                // Sends "True" or "False"+error_msgno
-                break;
             case "join":
+                allowed_user = true;
                 username = msg["username"];
                 room = msg["data"];
-                room_join_and_creation(username, ws, room);
+                if (room != undefined) {
+                    users = rooms.get(room).get("users");
+                    if (users.get(username) != undefined) {
+                        ws.send(JSON.stringify({type: "error", data: "not unique user"}));
+                        ws.close();
+                        allowed_user = false;
+                    } 
+                }
+                if (allowed_user) {
+                    room_join_and_creation(username, ws, room);
+                }
                 break;
         }
     });
@@ -40,15 +48,15 @@ wss.on("connection", function connection(ws) {
             rooms.get(room).get("users").delete(username);
         }
         ws.close();
-        console.log(username +  " disconnected");
+        console.log(username + " disconnected");
     });
-        
+
 });
 
-function room_join_and_creation(username, ws, room_name){
+function room_join_and_creation(username, ws, room_name) {
     let room = rooms.get(room_name);
     if (room == undefined) {
-        rooms.set(room_name, new Map([["users", new Map()],["msg",[]]]));
+        rooms.set(room_name, new Map([["users", new Map()], ["msg", []]]));
         room = rooms.get(room_name);
     }
     let users = room.get("users");
@@ -60,8 +68,8 @@ function handle_message(username, room, msg_data) {
     const msg = JSON.parse(msg_data).data;
     if (chat_room != undefined) {
         let users = chat_room.get("users");
-        for (const [key, value] of users){
-            value.send(JSON.stringify({username:username, type:"msg", data:msg, timestamp: new Date().toLocaleString()}));
+        for (const [key, value] of users) {
+            value.send(JSON.stringify({username: username, type: "msg", data: msg, timestamp: new Date().toLocaleString()}));
         }
     }
     chat_room.style.height = "16px";

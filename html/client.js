@@ -52,6 +52,10 @@ webSocket.onmessage = (event) => {
                 case "msg":
                         addMessage(data);
                         break;
+                case "error":
+                        let error_message = data["data"];
+                        //TODO Figure out how to redirect user back, you do this
+                        break;
         }
         
         console.log(data);
