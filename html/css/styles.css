@@ -67,15 +67,6 @@ h2 {
     padding-bottom: 0.5rem;
 }
 
-h3 {
-    font-size: var(--text-size-md);
-    color: var(--base-color-1);
-    font-weight: bold;
-    margin: 0;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-}
-
 /* Text Margin and Color */
 p {
     margin-top: 0;
@@ -105,9 +96,11 @@ button:focus {
 Custom Scrollbar ===============================================
 ***************************************************************/
 @supports (-webkit-appearance: none) {
+
     /* Only apply this if the browser supports WebKit features */
     ::-webkit-scrollbar {
-        width: 0.5rem; /* Width of the vertical scrollbar */
+        width: 0.5rem;
+        /* Width of the vertical scrollbar */
     }
 
     /* Scrollbar Track */
@@ -131,8 +124,9 @@ Custom Scrollbar ===============================================
 @supports not (-webkit-appearance: none) {
     html {
         scrollbar-width: thin;
-        scrollbar-color: var(--base-color-1) var(--background-2);    
+        scrollbar-color: var(--base-color-1) var(--background-2);
     }
+
     #message_box {
         scrollbar-color: var(--base-color-1) var(--background-1);
     }
@@ -197,11 +191,13 @@ body.center-items {
     font-weight: bold;
     background-color: var(--background-1);
     transition: 0.2s ease-in-out;
-    pointer-events: none; /* Prevent pointer events on the label */
+    pointer-events: none;
+    /* Prevent pointer events on the label */
 }
+
 .labeledInput:has(input:focus) .inputLabel,
 .labeledInput:has(input:valid) .inputLabel,
-.labeledInput:has(input:active) .inputLabel{
+.labeledInput:has(input:active) .inputLabel {
     color: var(--accent-color-1);
     top: -1.6rem;
     font-size: var(--text-size-sm);
@@ -228,6 +224,7 @@ header {
     margin: 0;
     z-index: 5;
 }
+
 section {
     margin: 0;
 }
@@ -242,7 +239,7 @@ section {
     height: calc(100vh - 3rem);
 }
 
-#message_box{
+#message_box {
     display: block;
     flex-grow: 1;
     flex-shrink: 1;
@@ -279,7 +276,7 @@ section {
     border-radius: 0.5rem;
 }
 
-.msgInput-wrapper textarea{
+.msgInput-wrapper textarea {
     width: 100%;
     min-height: 1rem;
     max-height: 40vh;
@@ -293,7 +290,7 @@ section {
     outline: none;
 }
 
-.msgInput-wrapper button{
+.msgInput-wrapper button {
     float: right;
     vertical-align: top;
     padding: 0;
@@ -301,9 +298,24 @@ section {
     width: 2.2rem;
     height: 2.2rem;
     padding: 0.2rem;
+
     svg {
         padding-top: 0.1rem;
     }
+}
+
+.msg {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.msg-user {
+    font-weight: bold;
+}
+
+.msg-time {
+    color: var(--base-color-2);
+    font-style: italic;
 }
 
 /***************************************************************
