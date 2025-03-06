@@ -30,8 +30,6 @@ Base CSS =======================================================
 
 /* Html Body and Base Background */
 html {
-    scrollbar-width: thin;
-    scrollbar-color: var(--base-color-1) var(--background-2);
     scroll-behavior: smooth;
     background-color: var(--background-0);
     color: var(--base-color-1);
@@ -101,6 +99,43 @@ button:hover,
 button:focus {
     background-color: var(--accent-color-2);
     border-bottom: 0.2rem solid var(--accent-color-3);
+}
+
+/***************************************************************
+Custom Scrollbar ===============================================
+***************************************************************/
+@supports (-webkit-appearance: none) {
+    /* Only apply this if the browser supports WebKit features */
+    ::-webkit-scrollbar {
+        width: 0.5rem; /* Width of the vertical scrollbar */
+    }
+
+    /* Scrollbar Track */
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Scrollbar Thumb */
+    ::-webkit-scrollbar-thumb {
+        background: var(--base-color-1);
+        border-radius: 0.25rem;
+    }
+
+    /* Scrollbar Thumb on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--base-color-2);
+    }
+}
+
+/* Fallback for Custom Scrollbar */
+@supports not (-webkit-appearance: none) {
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--base-color-1) var(--background-2);    
+    }
+    #message_box {
+        scrollbar-color: var(--base-color-1) var(--background-1);
+    }
 }
 
 /***************************************************************
@@ -214,7 +249,6 @@ section {
     flex-basis: auto;
     align-self: auto;
     overflow-y: scroll;
-    scrollbar-color: var(--base-color-1) var(--background-1);
     padding-left: 2rem;
     padding-right: 2rem;
 }
