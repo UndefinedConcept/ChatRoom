@@ -77,7 +77,7 @@ function addMessage(data) {
         // ARGS: json {timestamp, username, message}
         const messageElement = document.createElement('div');
         messageElement.classList.add('msg');
-        messageElement.innerHTML = data["timestamp"] +"  " + data["username"] + "  " + formatMessage(data["data"]); // Allow HTML rendering for formatting
+        messageElement.innerHTML = ` <div class="msg-info"> <span class="msg-user">${data["username"]}</span> <span class="msg-time">${data["timestamp"]}</span> </div> ${formatMessage(data["data"])} `;
         messagesDiv.appendChild(messageElement);
         window.scrollTo(0, document.body.scrollHeight);
 }
