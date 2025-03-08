@@ -1,0 +1,323 @@
+/***************************************************************
+Base CSS =======================================================
+***************************************************************/
+:root {
+    /* [Var] Color Palette (Black-Gray-Black) */
+    --background-0: hsl(220, 7%, 18%);
+    --background-1: hsl(223, 7%, 21%);
+    --background-2: hsl(225, 7%, 25%);
+    --base-color-1: hsl(210, 10%, 90%);
+    --base-color-2: hsl(214, 10%, 60%);
+    --accent-color-1: hsl(235, 90%, 70%);
+    --accent-color-2: hsl(235, 85%, 65%);
+    --accent-color-3: hsl(235, 80%, 60%);
+    /* [Var] Text (Minor Third 1.2 Scale Rounded Ratio) */
+    --text-size-sm: 0.8rem;
+    --text-size-md: 1rem;
+    --text-size-lg: 1.2rem;
+    --text-size-title: 2rem;
+    /* [Fixed] Font (Inter Best Font) */
+    font-family: "Inter", sans-serif;
+    font-feature-settings: "calt", "ss03", "cv02", "cv05", "cv11";
+    /* fix for Chrome */
+}
+
+@supports (font-variation-settings: normal) {
+    :root {
+        font-family: "InterVariable", sans-serif;
+    }
+}
+
+/* Html Body and Base Background */
+html {
+    scroll-behavior: smooth;
+    background-color: var(--background-0);
+    color: var(--base-color-1);
+    font-size: var(--text-size-md);
+    line-height: 1.5;
+    min-width: 320px;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+html.light-gray {
+    background-color: var(--background-1);
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+/* Headings */
+h1 {
+    font-size: var(--text-size-title);
+    font-weight: bold;
+    margin: 0;
+    color: var(--accent-color-1);
+}
+
+h2 {
+    font-size: var(--text-size-lg);
+    color: var(--base-color-1);
+    font-weight: bold;
+    margin: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+/* Text Margin and Color */
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0.5rem 0;
+}
+
+/* Button Stuff */
+button {
+    padding: 0.8rem 0.6rem;
+    border: none;
+    border-bottom: 0.2rem solid var(--accent-color-2);
+    border-radius: 0.5rem;
+    background-color: var(--accent-color-1);
+    color: var(--base-color-1);
+    font-size: var(--text-size-md);
+    font-weight: bold;
+}
+
+button:hover,
+button:focus {
+    background-color: var(--accent-color-2);
+    border-bottom: 0.2rem solid var(--accent-color-3);
+}
+
+/***************************************************************
+Custom Scrollbar ===============================================
+***************************************************************/
+@supports (-webkit-appearance: none) {
+
+    /* Only apply this if the browser supports WebKit features */
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        /* Width of the vertical scrollbar */
+    }
+
+    /* Scrollbar Track */
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Scrollbar Thumb */
+    ::-webkit-scrollbar-thumb {
+        background: var(--base-color-1);
+        border-radius: 0.25rem;
+    }
+
+    /* Scrollbar Thumb on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--base-color-2);
+    }
+}
+
+/* Fallback for Custom Scrollbar */
+@supports not (-webkit-appearance: none) {
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--base-color-1) var(--background-2);
+    }
+
+    #message_box {
+        scrollbar-color: var(--base-color-1) var(--background-1);
+    }
+}
+
+/***************************************************************
+index.html Specific ============================================
+***************************************************************/
+body.center-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.login-wrapper {
+    text-align: center;
+    background-color: var(--background-1);
+    padding: 2rem 2rem;
+    border-radius: 1rem;
+}
+
+#login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#login *:not(:first-child) {
+    margin-top: 1rem;
+}
+
+/* Base for Inputs */
+.labeledInput {
+    position: relative;
+    margin-top: 1rem;
+}
+
+.labeledInput input {
+    padding: 0.8rem 0.6rem;
+    border: 2px solid var(--base-color-2);
+    border-radius: 0.5rem;
+    background-color: transparent;
+    color: var(--base-color-1);
+    font-size: var(--text-size-md);
+    transition: border-color 0.2s ease-in-out;
+}
+
+.labeledInput input:focus {
+    outline: none;
+    border-color: var(--accent-color-1);
+}
+
+.inputLabel {
+    position: absolute;
+    left: 0.4rem;
+    top: -0.2rem;
+    padding: 0 0.2rem;
+    color: var(--base-color-2);
+    font-size: var(--text-size-md);
+    font-weight: bold;
+    background-color: var(--background-1);
+    transition: 0.2s ease-in-out;
+    pointer-events: none;
+    /* Prevent pointer events on the label */
+}
+
+.labeledInput:has(input:focus) .inputLabel,
+.labeledInput:has(input:valid) .inputLabel,
+.labeledInput:has(input:active) .inputLabel {
+    color: var(--accent-color-1);
+    top: -1.6rem;
+    font-size: var(--text-size-sm);
+}
+
+/* Button */
+.validButton-wrapper:has(input:invalid) button,
+.validButton-wrapper:has(input:invalid) button:hover,
+.validButton-wrapper:has(input:invalid) button:focus {
+    background-color: var(--background-2);
+    border-bottom: 0.2rem solid var(--background-0);
+}
+
+.paddedRightLeft {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/***************************************************************
+chat.html Specific =============================================
+***************************************************************/
+header {
+    border-bottom: 0.2rem solid var(--background-0);
+    margin: 0;
+    z-index: 5;
+}
+
+section {
+    margin: 0;
+}
+
+#chat_wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: flex-start;
+    height: calc(100vh - 3rem);
+}
+
+#message_box {
+    display: block;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: auto;
+    overflow-y: scroll;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+#user_input {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+}
+
+.msgInput-wrapper {
+    border-top: 0.2rem solid var(--background-0);
+    flex-grow: 1;
+    padding-left: 2rem;
+    padding-right: 0.7rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.msgInput-wrapper .textarea-div {
+    float: left;
+    width: calc(100% - 4.6rem);
+    /* top | left and right | bottom */
+    padding: 0.55rem 0.8rem calc(0.55rem - 0.5rem);
+    height: fit-content;
+    margin: 0;
+    background: var(--background-2);
+    border-radius: 0.5rem;
+}
+
+.msgInput-wrapper textarea {
+    width: 100%;
+    min-height: 1rem;
+    max-height: 40vh;
+    padding: 0;
+    font-size: var(--text-size-md);
+    color: var(--base-color-1);
+    margin: 0;
+    background: transparent;
+    resize: none;
+    border: none;
+    outline: none;
+}
+
+.msgInput-wrapper button {
+    float: right;
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+    width: 2.2rem;
+    height: 2.2rem;
+    padding: 0.2rem;
+
+    svg {
+        padding-top: 0.1rem;
+    }
+}
+
+.msg {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.msg-user {
+    font-weight: bold;
+}
+
+.msg-time {
+    color: var(--base-color-2);
+    font-style: italic;
+}
+
+/***************************************************************
+[>1200px] Wide Screen ==========================================
+***************************************************************/
