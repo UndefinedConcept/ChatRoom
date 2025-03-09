@@ -220,16 +220,21 @@ body.center-items {
 chat.html Specific =============================================
 ***************************************************************/
 header {
+    display: flex;
+    justify-content: space-between;
     border-bottom: 0.2rem solid var(--background-0);
     margin: 0;
     z-index: 5;
 }
 
 section {
+    display: flex;
+    flex-direction: row;
     margin: 0;
 }
 
 #chat_wrapper {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -316,6 +321,86 @@ section {
 .msg-time {
     color: var(--base-color-2);
     font-style: italic;
+}
+
+/* Side Bar ***************************************************/
+.sideBar {
+    margin: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    min-width: 10rem;
+    width: auto;
+    height: calc(100vh - 3rem);
+    overflow-y: scroll;
+    background-color: var(--background-0);
+}
+
+.userBox-wrapper:not(:has(.userContainer .user_info)) {
+    display: none;
+}
+
+.sideBar .userBox-wrapper {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.userBox-wrapper #users_box_label {
+    font-weight: bold;
+    font-size: var(--text-size-sm);
+}
+
+.userBox-wrapper .user_info {
+    displaY: flex;
+    align-items: center;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    height: 2.5rem;
+    font-size: var(--text-size-md);
+    border-radius: 0.5rem;
+
+    &:hover {
+        background-color: var(--background-1);
+    }
+
+    &::before {
+        content: "";
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        padding-right: 0.5rem;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 19.2c-2.5 0-4.71-1.28-6-3.2c.03-2 4-3.1 6-3.1s5.97 1.1 6 3.1a7.23 7.23 0 0 1-6 3.2M12 5a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0-3A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10c0-5.53-4.5-10-10-10'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+    }
+}
+
+.sideBar-toggle {
+    width: 2rem;
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M16 17v2H2v-2s0-4 7-4s7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.4 3.4 0 0 0-1.93.59a5 5 0 0 1 0 5.82A3.4 3.4 0 0 0 15 11a3.5 3.5 0 0 0 0-7'/%3E%3C/svg%3E");
+    background-color: var(--base-color-1);
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    input[type=checkbox] {
+        display: none;
+    }
+    &:has(input:checked){
+        background-color: var(--base-color-2);
+        &:hover {
+            background-color: var(--base-color-1);
+        }
+    }
+}
+.sideBar-wrapper:has(.sideBar-toggle input:checked) .sideBar{
+    display: none;
 }
 
 /***************************************************************

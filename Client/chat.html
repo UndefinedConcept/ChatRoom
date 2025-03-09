@@ -14,9 +14,12 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 
-<body>
+<body class="sideBar-wrapper">
   <header class="paddedRightLeft">
     <h2 id="room_name">Room 1</h2>
+    <label class="sideBar-toggle">
+      <input class="sideBar-toggle-input" type='checkbox' />
+    </label>
   </header>
   <section>
     <div id="chat_wrapper">
@@ -63,8 +66,15 @@
         </button>
       </form>
     </div>
-    <div id="users_box" class="paddedRightLeft">
-
+    <div class="sideBar">
+      <div id="online_users" class="userBox-wrapper">
+        <span id="users_box_label">
+          ONLINE - <span id="number_of_users"></span>
+        </span>
+        <div id="users_box" class="userContainer">
+        </div>
+      </div>
+      <!-- Add more userBox-wrapper for Offline or Other Types -->
     </div>
   </section>
 
