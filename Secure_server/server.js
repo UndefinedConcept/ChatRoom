@@ -1,8 +1,15 @@
 const WebSocket = require("ws");
+const fs = require("fs");
+const https = require("https");
 
 // Server connection to 8080
+const server = new https.Server({
+    key: fs.readFileSync("/etc/ssl/private/selfsigned.key"),
+    cert: fs.readFileSync("/etc/ssl/certs/selfsigned.crt")
+});
+
 const wss = new WebSocket.Server({
-    port: 4433
+    server
 });
 
 // Constants
@@ -75,3 +82,4 @@ function handle_message(username, room, msg_data) {
     }
 }
 
+server.listen(8080);
