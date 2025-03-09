@@ -49,6 +49,7 @@ webSocket.onopen = (event) => {
 webSocket.onmessage = (event) => {
         // message: {timestamp, username, messageType, message}
         const data = JSON.parse(event.data);
+        //console.log(data);
         switch (data["type"]) {
                 case "msg":
                         addMessage(data);
@@ -57,9 +58,35 @@ webSocket.onmessage = (event) => {
                         let error_message = data["data"];
                         //TODO Figure out how to redirect user back, you do this
                         break;
+                case "info":
+                        console.log("info");
+                        add_info(data);
+                        break;
         }
 
-        console.log(data);
+        //console.log(data);
+}
+
+function add_info(data){
+        
+        console.log(data["detail"]);
+        switch (data["detail"]) {
+                case "join":
+                        const users = data["users"];
+                        console.log("join");
+                        for(let i=0; i<users.length; i++){
+                                console.log(users[i]);
+                                addUser(users[i], "online_users");
+                        }
+                        break;
+                case "leave":
+                        console.log("leave");
+                        removeUserByName(data["username"]);
+                        break;
+                case "add":
+                        addUser(data["username"], "online_users");
+        }
+       
 }
 
 function formatMessage(message) {

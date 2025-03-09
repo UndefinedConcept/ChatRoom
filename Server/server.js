@@ -35,24 +35,43 @@ wss.on("connection", function connection(ws) {
                         ws.send(JSON.stringify({type: "error", data: "not unique user"}));
                         ws.close();
                         allowed_user = false;
-                    } 
+                    }
                 }
                 if (allowed_user) {
-                    room_join_and_creation(username, ws, room);
+                    add_to_user_list(username, room, ws);
+
                 }
                 break;
         }
     });
 
     ws.on('close', () => {
-        if (username != '' && room != '') {
-            rooms.get(room).get("users").delete(username);
-        }
-        ws.close();
-        console.log(username + " disconnected");
+        remove_user(ws, username, room);
     });
 
 });
+
+function add_to_user_list(username, room, ws) {
+    room_join_and_creation(username, ws, room);
+    const users = rooms.get(room).get("users");
+    ws.send(JSON.stringify({username: "server", type: "info", detail: "join", users: Array.from(users.keys())}));
+    for (const [key, value] of users) {
+        value.send(JSON.stringify({username: username, type: "info", detail: "add"}));
+    }
+}
+
+function remove_user(ws, username, room) {
+    if (username != '' && room != '') {
+        let users = rooms.get(room).get("users");
+        users.delete(username);
+        for (const [key, value] of users) {
+            value.send(JSON.stringify({username: username, type: "info", detail: "leave"}));
+        }
+        console.log(username + " disconnected");
+    }
+    ws.close();
+
+}
 
 function room_join_and_creation(username, ws, room_name) {
     let room = rooms.get(room_name);
@@ -65,10 +84,10 @@ function room_join_and_creation(username, ws, room_name) {
 }
 
 function handle_message(username, room, msg_data) {
-    let chat_room = rooms.get(room);
+    const chat_room = rooms.get(room);
     const msg = JSON.parse(msg_data).data;
     if (chat_room != undefined) {
-        let users = chat_room.get("users");
+        const users = chat_room.get("users");
         for (const [key, value] of users) {
             value.send(JSON.stringify({username: username, type: "msg", data: msg, timestamp: new Date().toLocaleString()}));
         }
