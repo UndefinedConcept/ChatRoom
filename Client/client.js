@@ -42,6 +42,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 webSocket.onmessage = (event) => {
+        // ALL RECIEVED MESSAGES PAST THROUGH HERE
+        // TODO-SECURITY - de-encryption the outgoing message here
         const data = JSON.parse(event.data);
         console.log("Received: " + event.data);
         switch (data.type) {
@@ -70,8 +72,10 @@ webSocket.onmessage = (event) => {
 };
 
 function sendLogged(message) {
+        // ALL MESSAGES *MUST* BE PAST THROUGH HERE TO BE SENT OUT
         dataBeingSent = JSON.stringify(message);
         console.log("Sending:", dataBeingSent);
+        // TODO-SECURITY - encryption the outgoing message here
         webSocket.send(dataBeingSent);
 }
 
