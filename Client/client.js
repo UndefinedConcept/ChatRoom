@@ -13,6 +13,7 @@ const userInput = document.getElementById("input_box");
 
 document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("room_name").innerHTML = chatroom;
+        document.getElementById("input_box").placeholder = "Message #"+chatroom;
 
         userInput.addEventListener("input", function () {
                 this.style.height = 'auto';
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 webSocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        console.log("Recieved: " + event.data);
+        console.log("Received: " + event.data);
         switch (data.type) {
                 case "joinReply":
                         if (data.detail) {
@@ -69,9 +70,9 @@ webSocket.onmessage = (event) => {
 };
 
 function sendLogged(message) {
-        sentdata = JSON.stringify(message);
-        console.log("Sending:", sentdata);
-        webSocket.send(sentdata);
+        dataBeingSent = JSON.stringify(message);
+        console.log("Sending:", dataBeingSent);
+        webSocket.send(dataBeingSent);
 }
 
 function addInfo(data) {
