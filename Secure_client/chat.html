@@ -1,0 +1,56 @@
+<!-- public/chat.html -->
+<!DOCTYPE html>
+<html lang="en" class="light-gray">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatRoom</title>
+  <!-- Font: Inter -->
+  <link rel="expect" href="fonts/InterVariable.woff2" as="font" crossorigin="" type="font/woff2">
+  <link rel="stylesheet" href="fonts/inter.css" />
+  <!-- Main CSS Styles -->
+  <link rel="preload" href="css/styles.css" as="style">
+  <link rel="stylesheet" href="css/styles.css" />
+  <script
+            src="https://unpkg.com/node-forge@1.0.0/dist/forge.min.js"></script>
+</head>
+
+<body class="sideBar-wrapper">
+  <header class="paddedRightLeft">
+    <h2 id="room_name"></h2>
+    <label class="sideBar-toggle">
+      <input class="sideBar-toggle-input" type='checkbox' />
+    </label>
+  </header>
+  <section>
+    <div id="chat_wrapper">
+      <div id="message_box" class="paddedRightLeft"> </div>
+      <form id="user_input" class="paddedRightLeft msgInput-wrapper">
+        <div class="textarea-div">
+          <textarea name="" id="input_box" rows="1" required></textarea>
+        </div>
+        <button type="button" id="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="m12.815 12.197l-7.532 1.255a.5.5 0 0 0-.386.318L2.3 20.728c-.248.64.421 1.25 1.035.942l18-9a.75.75 0 0 0 0-1.341l-18-9c-.614-.307-1.283.303-1.035.942l2.598 6.958a.5.5 0 0 0 .386.318l7.532 1.255a.2.2 0 0 1 0 .395" />
+          </svg>
+        </button>
+      </form>
+    </div>
+    <div class="sideBar">
+      <div id="online_users" class="userBox-wrapper">
+        <span id="users_box_label">
+          ONLINE - <span id="number_of_users"></span>
+        </span>
+        <div id="users_box" class="userContainer">
+        </div>
+      </div>
+      <!-- Add more userBox-wrapper for Offline or Other Types -->
+    </div>
+  </section>
+
+  <script src="client.js"></script>
+</body>
+
+</html>
