@@ -18,7 +18,7 @@ document.addEventListener("keypress", function(event) {
 function submit_login() {
     const chatroom = document.getElementById("room_name").value;
     if (chatroom != "") {
-        localStorage.setItem("chatroom", chatroom);
+        
         window.location.href = "chat.html";
     }
 }
