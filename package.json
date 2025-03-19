@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "jsonwebtoken": "^9.0.2",
     "sqlite3": "^5.1.7",
     "ws": "^8.18.1"
   }

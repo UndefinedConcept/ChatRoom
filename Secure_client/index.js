@@ -16,10 +16,8 @@ document.addEventListener("keypress", function(event) {
 });
 
 function submit_login() {
-    const username = document.getElementById("user_name").value;
     const chatroom = document.getElementById("room_name").value;
-    if (username != "" && chatroom != "") {
-        localStorage.setItem("username", username);
+    if (chatroom != "") {
         localStorage.setItem("chatroom", chatroom);
         window.location.href = "chat.html";
     }

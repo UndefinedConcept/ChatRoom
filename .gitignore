@@ -139,3 +139,5 @@ config.json
 Secure_server\config.json
 Secure_server/config.json
 users.db
+public.txt
+private.txt
