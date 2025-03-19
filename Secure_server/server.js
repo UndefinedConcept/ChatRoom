@@ -139,11 +139,6 @@ function hash_password(password) {
     });
 }
 
-function create_user(username, password) {
-    const hashing = forge.md.sha512.create();
-
-}
-
 function encrypt(data, cipher, iv) {
     cipher.start({iv: iv});
     cipher.update(forge.util.createBuffer(data));
