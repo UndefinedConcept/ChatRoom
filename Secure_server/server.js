@@ -6,6 +6,7 @@ const config = JSON.parse(fs.readFileSync("config.json"));
 const {v4: uuidv4} = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {send} = require("process");
 
 const server_name = "server";
 
@@ -31,7 +32,7 @@ db.exec("CREATE TABLE IF NOT EXISTS users(username TEXT PRIMARY KEY, password TE
 
 // Server Stuff
 wss.on("connection", function connection(ws) {
-    const user = {username: undefined, key: undefined, iv: undefined, decipher: undefined, cipher: undefined, uid: uuidv4(), ws: ws, room: undefined};
+    const user = {username: undefined, key: undefined, iv: undefined, decipher: undefined, cipher: undefined, uid: undefined, ws: ws, room: undefined};
 
     console.log("New connection established");
 
@@ -103,6 +104,7 @@ function intialize_user(data, user) {
     user.cipher = forge.cipher.createCipher('AES-CBC', key);
     user.decipher = forge.cipher.createDecipher('AES-CBC', key);
     user.uid = uuidv4();
+    sendLogged(user, {username: server_name, type: "awk", data: {uid:user.uid}});
     console.log(user);
 }
 
@@ -135,7 +137,11 @@ function user_auth(data, user) {
             result = true;
         }
     });
-    return result;
+    if (result) {
+        sendLogged(user, {usernane: server_name, type: "confirm", data: {username: user.username}});
+    } else {
+        sendLogged(user, {username: server_name, type: "error", data: {detail: "token_invalid"}});
+    }
 }
 
 function send_token(user) {
@@ -145,7 +151,7 @@ function send_token(user) {
 
 function user_create(data, user) {
     let query_result = undefined;
-    const username = user.username.toLowerCase();
+    const username = data.username.toLowerCase();
     const pattern = new RegExp("\\W");
 
     if (pattern.test(username)) {
