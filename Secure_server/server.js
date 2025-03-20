@@ -65,7 +65,7 @@ wss.on("connection", function connection(ws) {
                     foward_message(msg_data, user);
                     break;
                 default:
-                    console.log("Error, unkown message:"+data);
+                    console.log("Error, unkown message:" + data);
             }
         }
 
@@ -76,7 +76,7 @@ wss.on("connection", function connection(ws) {
         if (room != undefined) {
             room.delete(user.uid);
             for (const [key, value] of room) {
-                sendLogged(value, {username: server_name, type: "leave", data: {user:user.username}});
+                sendLogged(value, {username: server_name, type: "leave", data: {user: user.username}});
             }
         }
     });
@@ -195,6 +195,7 @@ function hash_password(password) {
         return hash;
     });
 }
+
 function decrypt(data, decipher, iv) {
     decipher.start({iv: iv});
     decipher.update(data);
