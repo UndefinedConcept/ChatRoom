@@ -48,7 +48,7 @@ wss.on("connection", function connection(ws) {
             }
         } else {
             const msg = decrypt(data);
-            const msg_data = JSON.parse(msg.data);
+            const msg_data = msg.data;
             switch (msg.type) {
                 case "login":
                     user_login(msg_data, user);
@@ -62,11 +62,15 @@ wss.on("connection", function connection(ws) {
                 case "join_room":
                     join_room(msg_data, user);
                     break;
-                case "message":
+                case "msg":
                     foward_message(msg_data, user);
                     break;
+                case "check_room":
+                    check_room(msg_data, user);
+                    break;
                 default:
-                    console.log("Error, unkown message:" + data);
+                    console.log("Error, unkown message:" + msg);
+                    break;
             }
         }
 
@@ -77,7 +81,7 @@ wss.on("connection", function connection(ws) {
         if (room != undefined) {
             room.delete(user.uid);
             for (const [key, value] of room) {
-                sendLogged(value, {username: server_name, type: "leave", data: {user: user.username}});
+                sendLogged(value, {username: server_name, type: "info", data: {username: user.username, detail:"leave"}});
             }
         }
     });
@@ -88,7 +92,7 @@ function foward_message(data, user) {
     if (room != undefined) {
         for (const [key, value] of room) {
             if (key !== user.uid) {
-                sendLogged(value, {username: user.username, type: "msg", data: {timestamp: data.timestamp, msg: data.msg}});
+                sendLogged(value, {username: user.username, type: "msg", data: {timestamp: new Date().toLocaleString(), msg: data.msg}});
             }
         }
     } else {
@@ -108,6 +112,16 @@ function intialize_user(data, user) {
     console.log(user);
 }
 
+function check_room(data, user) {
+    const room_name = data.room;
+    let room = rooms.get(room_name);
+    if (room.has(user.id)) {
+        sendLogged(user, {type: "error", data: {detail: "user_join", msg: "Duplicate user in room, closing connection"}});
+    } else {
+        sendLogged(user, {type: "continue", data: {detail: "Good to go"}});
+    }
+}
+
 function join_room(data, user) {
     const room_name = data.room;
     let room = rooms.get(room_name);
@@ -115,14 +129,18 @@ function join_room(data, user) {
         room = new Map();
         rooms.set(room_name, room);
         room.set(user.uid, user);
-        sendLogged(user, {username: server_name, type: "joined", data: {msg: "Sucessfully joined room " + room_name}});
+        sendLogged(user, {username: server_name, type: "info", data: {msg: "Sucessfully joined room " + room_name}});
     } else if (room.has(user.uid)) {
-        sendLogged(user, {username: server_name, type: "error", data: {detail: "user_create", msg: "Duplicate user in room, closing connection"}});
+        sendLogged(user, {username: server_name, type: "error", data: {detail: "user_join", msg: "Duplicate user in room, closing connection"}});
         user.ws.close();
     } else {
+        let users = [];
         for (const [key, value] of room) {
-            sendLogged(value, {username: server_name, type: "user_add", data: {username: user.username}});
+            sendLogged(value, {username: server_name, type: "info", data: {detail:"add", username: user.username}});
+            users.push(value.username);
         }
+        sendLogged(user, {username: server_name, type:"info", data: {detail:"join", users:users}})
+        
         room.set(user.uid, user);
         sendLogged(user, {username: server_name, type: "joined", data: {msg: "Sucessfully joined room " + room_name}});
     }

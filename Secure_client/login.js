@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function (event){
     
 });
 
-webSocket.onmessage() = function(event) {
+webSocket.addEventListener("message", function(event){
     const msg = decrypt(event.data);
     const msg_data = JSON.parse(msg.data);
     switch(msg.type) {
@@ -50,7 +50,7 @@ webSocket.onmessage() = function(event) {
             document.cookie = msg_data.token;
             break;
     }
-}
+});
 
 function login_sucessful(data) {
     localStorage.setItem("username", data.username);

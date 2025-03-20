@@ -24,11 +24,19 @@ const cipher = forge.cipher.createCipher('AES-CBC', key);
 
 const decipher = forge.cipher.createDecipher('AES-CBC', key);
 
+const cookie = document.cookie;
+
 let uid = "";
+
+let authincated = false;
+
+if (cookie == "") {
+        window.location.href = "login.html";
+}
 
 document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("room_name").innerHTML = chatroom;
-        document.getElementById("input_box").placeholder = "Message #"+chatroom;
+        document.getElementById("input_box").placeholder = "Message #" + chatroom;
 
         userInput.addEventListener("input", function () {
                 this.style.height = 'auto';
@@ -71,34 +79,25 @@ function decrypt(data) {
 }
 
 webSocket.onmessage = (event) => {
-        // ALL RECIEVED MESSAGES PAST THROUGH HERE
-        // TODO-SECURITY - de-encryption the outgoing message here
-        const data = decrypt(event.data);
-
-
-        
+        const msg = decrypt(event.data);
+        const msg_data = msg.data; 
         console.log("Received: " + event.data);
         switch (data.type) {
                 case "awk":
-                        uid = data.uid;
-                        sendLogged({ username: username, type: "joinRequest", data: chatroom, uid: uid });
-                case "joinReply":
-                        if (data.detail) {
-                                const currentUsers = data.users;
-                                currentUsers.forEach(user => addUser(user, "online_users"));
-                        } else {
-                                console.warn("User not allowed. Redirecting to homepage.");
-                                window.location.href = "index.html?error=" + data["error"];  // Redirect to home page
-                        }
-                        break;
+                        uid = msg_data.uid;
+                        process_start(msg_data);
                 case "msg":
-                        addMessage(data);
+                        addMessage(msg_data);
                         break;
                 case "error":
-                        console.error("Error received:", data.data);
+                        error(msg_data);
                         break;
                 case "info":
-                        addInfo(data);
+                        addInfo(msg_data);
+                        break;
+                case "confirm":
+                        authincated = true;
+                        join(msg_data);
                         break;
                 default:
                         console.warn("Unknown type:", data.type);
@@ -106,13 +105,39 @@ webSocket.onmessage = (event) => {
         }
 };
 
-function sendLogged(message) {
-        // ALL MESSAGES *MUST* BE PAST THROUGH HERE TO BE SENT OUT
-        dataBeingSent = JSON.stringify(message);
+function join(data) {
+        sendLogged({user: username, type:"join_room", data: {room: chatroom}});
+        addUser(username, "online_users");
+}
 
-        console.log("Sending:", dataBeingSent);
-        // TODO-SECURITY - encryption the outgoing message here
-        webSocket.send(encrypt(dataBeingSent));
+function error(data) {
+        if (data.detail == "token_invalid") {
+                document.cookie = "";
+                window.location.href = "login.html";
+        } else {
+                console.warn(data);
+        }
+}
+
+function process_start(data) {
+        uid = data.uid;
+        if (cookie != "") {
+                sendLogged({uid: uid, type: "jwt", data: {token: cookie}});
+        }
+}
+
+function sendLogged(message) {
+        const msg = {username: uid, message};
+        cipher.update(forge.util.createBuffer(JSON.stringify(msg)));
+        cipher.finish();
+        webSocket.send(cipher.output.getBytes());
+        console.log(message);
+}
+
+function decrypt(data) {
+        decipher.start({iv: iv});
+        decipher.update(data);
+        return JSON.parse(decipher.output());
 }
 
 function addInfo(data) {
@@ -154,7 +179,7 @@ document.getElementById("submit").addEventListener("click", submitMessage);
 
 function submitMessage() {
         if (userInput.value.trim()) {
-                sendLogged({ username: username, type: "msg", data: userInput.value.trim() });
+                sendLogged({username: username, type: "msg", data: {msg: userInput.value.trim()}});
                 userInput.value = "";
                 userInput.style.height = 'auto';
         } else {
