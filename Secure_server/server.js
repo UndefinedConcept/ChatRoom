@@ -72,8 +72,12 @@ wss.on("connection", function connection(ws) {
     });
 
     ws.on('close', () => {
-        if (user.room != undefined) {
-            rooms.get(user.room).delete(user.uid);
+        const room = rooms.get(user.room);
+        if (room != undefined) {
+            room.delete(user.uid);
+            for (const [key, value] of room) {
+                sendLogged(value, {username: server_name, type: "leave", data: {user:user.username}});
+            }
         }
     });
 });
