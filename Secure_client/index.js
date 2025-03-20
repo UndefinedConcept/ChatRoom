@@ -1,24 +1,27 @@
-const saved_username = localStorage.getItem("username");
 const saved_chatroom = localStorage.getItem("chatroom");
 
-if (saved_username != undefined){
-    document.getElementById("user_name").value = saved_username;
-}
+const room_name_elm = document.getElementById("room_name");
 
-if (saved_chatroom != undefined) {
-    document.getElementById("room_name").value = saved_chatroom;
-}
-
-document.addEventListener("keypress", function(event) {
-    if (event.key == "Enter") {
-        submit_login();
+document.addEventListener("DOMContentLoaded", function (event){
+    webSocket.onopen = function(event) {
+        console.log("Connection made");
+        webSocket.send(publicKey.encrypt({key:key, iv:iv}));
+    }
+    if (saved_chatroom != undefined) {
+        room_name_elm.value = saved_chatroom;
     }
 });
 
-function submit_login() {
+
+document.addEventListener("keypress", function(event) {
+    if (event.key == "Enter") {
+        join();
+    }
+});
+
+function join() {
     const chatroom = document.getElementById("room_name").value;
     if (chatroom != "") {
-        
         window.location.href = "chat.html";
     }
 }
