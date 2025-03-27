@@ -212,8 +212,8 @@ body.center-items {
 }
 
 .paddedRightLeft {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 /***************************************************************
@@ -251,8 +251,6 @@ section {
     flex-basis: auto;
     align-self: auto;
     overflow-y: scroll;
-    padding-left: 2rem;
-    padding-right: 2rem;
 }
 
 #user_input {
@@ -264,8 +262,6 @@ section {
 .msgInput-wrapper {
     border-top: 0.2rem solid var(--background-0);
     flex-grow: 1;
-    padding-left: 2rem;
-    padding-right: 0.7rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
@@ -404,5 +400,5 @@ section {
 }
 
 /***************************************************************
-[>1200px] Wide Screen ==========================================
+[<320px] Phone Screen ==========================================
 ***************************************************************/
