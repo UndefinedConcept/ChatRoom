@@ -98,7 +98,7 @@ function addInfo(data) {
 }
 
 function formatMessage(message) {
-        return message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/~~(.*?)~~/g, '<span style="text-decoration: line-through;">$1</span>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/~(.*?)~/g, '<sub>$1</sub>').replace(/\^(\S+)\^/g, '<sup>$1</sup>').replace(/https?:\/\/[^\s]+/g, '<a href="$&" target="_blank">$&</a>').replace(/\\n/g, "</br>");
+        return message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/~~(.*?)~~/g, '<span style="text-decoration: line-through;">$1</span>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/~(.*?)~/g, '<sub>$1</sub>').replace(/\^(\S+)\^/g, '<sup>$1</sup>').replace(/https?:\/\/[^\s]+/g, '<a href="$&" target="_blank">$&</a>').replace(/\n/g, "</br>");
 }
 
 function addMessage(data) {
