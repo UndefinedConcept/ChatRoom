@@ -33,14 +33,56 @@ This project aims to develop a WebSocket-based chat room website that provides r
 - WebSocket library for real-time communication
 - Wireshark or similar tools for packet analysis
 
-## Project Structure
+## Core Project Structure
+```Plaintext
+project-directory/
+│
+├── Client/
+│   ├── css/styles.css   # Stylesheet
+│   ├── fonts/...        # Inter Font
+│   ├── index.html       # Inital Login Page
+│   ├── index.js         # Login Configurations
+│   ├── chat.html        # Chat Page
+│   ├── chat.js          # Main Client JS
+│
+├── Server/
+│   ├── server.js        # Node.js server
+│
+├── package.json         # Project metadata and dependencies
+│
+├── README.md            # Documentation
 
-- \`Client/\`: Contains static files served to the client (HTML, CSS, JavaScript)
-- \`Server/\`: Contains backend code (Node.js, Express)
+```
 
-## Setup and Installation
+## Prerequisites
+Before starting, ensure you have the following installed:
+- **VSCode**: Download and install from [here](https://code.visualstudio.com/download).
+- **Node.js**: Download and install from [here](https://nodejs.org/) (recommended prebuilt Node.js).
+- **npm**: Comes pre-installed with Node.js (type `npm -v` to check).
 
-Coming Soon…
+## Installation
+Follow these steps to set up the project:
+
+1. Clone the repository or download the project folder and open it.
+```bash
+git clone https://github.com/UndefinedConcept/ChatRoom.git
+cd ChatRoom
+```
+2. Install the required dependencies
+```bash
+npm install
+```
+3. Running the Server
+```bash
+node Server/server.js
+```
+4. Running the Client
+   - In "Explorer", open up `Client/index.html`
+   - In "Run and Debug" (found on the left sidebar of VSCode) or `Ctrl` + `Shift` + `D`
+   - Press the `Run and Debug` button in "Run and Debug" (opens file in your drive)
+
+5. Your application will open in your default browser.
+> To get the full demo experience, open the console on your browser using `Ctrl`+`Shift`+`J` (Windows/Linux) or `Command`+`Option`+`J` (Mac) to view the data your device sends and receives for the chatroom. You can also open the "Debug Console" on VSCode to see the console of all the active clients.
 
 ## Usage
 
@@ -56,10 +98,6 @@ We welcome contributions from the community. To contribute, please fork the repo
 ## License
 
 This project is licensed under the MIT License \- see the [LICENSE](https://github.com/UndefinedConcept/ChatRoom/blob/main/LICENSE) file for details.
-
-## Acknowledgements
-
-Coming Soon…
 
 ## Contact
 
