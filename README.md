@@ -7,6 +7,8 @@
     </p>   
 </div>
 
+[![ChatRoom Demo GIF](https://github.com/UndefinedConcept/ChatRoom/blob/main/ChatRoom%20Demo.gif)](https://github.com/UndefinedConcept/ChatRoom/blob/main/demo/ChatRoom%20Demo.pdf)
+
 ## Project Overview
 
 This project aims to develop a WebSocket-based chat room website that provides real-time communication between users. Additionally, the website will visualize the internet traffic by sending and tracking packets between the client and server. This project combines the concepts of WebSockets, real-time web applications, and network packet analysis. This website is hosted on Raspberry Pi and Asus Wireless Router.
