@@ -7,7 +7,7 @@
     </p>   
 </div>
 
-[![ChatRoom Demo GIF](https://github.com/UndefinedConcept/ChatRoom/blob/main/ChatRoom%20Demo.gif)](https://github.com/UndefinedConcept/ChatRoom/blob/main/demo/ChatRoom%20Demo.pdf)
+[![ChatRoom Demo GIF](https://github.com/UndefinedConcept/ChatRoom/blob/main/demo/ChatRoom%20Demo.gif)](https://github.com/UndefinedConcept/ChatRoom/blob/main/demo/ChatRoom%20Demo.pdf)
 
 ## Project Overview
 
