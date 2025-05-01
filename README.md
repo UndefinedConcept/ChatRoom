@@ -24,14 +24,14 @@ This project aims to develop a WebSocket-based chat room website that provides r
 
 - Real-time chatroom with multiple users
 - Server hosted on a Raspberry Pi with NGINX
-- Packet visualization showing the flow of messages between client and server
+- Packet visualization showing the flow of messages
 - User-friendly interface with interactive elements
 - Logging and analysis of packet data
 
 ## Technologies Used
 
 - HTML, CSS, JavaScript for frontend development
-- Node.js for JavaScript runtime environment
+- Node.js and NGINX for backend development
 - WebSocket library for real-time communication
 - Wireshark or similar tools for packet analysis
 
