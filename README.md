@@ -31,7 +31,7 @@ This project aims to develop a WebSocket-based chat room website that provides r
 ## Technologies Used
 
 - HTML, CSS, JavaScript for frontend development
-- Node.js and Express for backend development
+- Node.js for JavaScript runtime environment
 - WebSocket library for real-time communication
 - Wireshark or similar tools for packet analysis
 
